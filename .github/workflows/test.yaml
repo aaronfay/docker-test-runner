@@ -1,0 +1,27 @@
+name: GI
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: node:12-alpine
+      # this will be used by the Ghost Inspector container
+      options: --network-alias node-app
+    steps:
+      - uses: actions/checkout@v2
+      - name: install, build, and run app
+        run: |
+          cd test/node-app
+          node index.js &
+      - name: execute Ghost Inspector suite
+        uses: docker://ghostinspector/cli
+        with:
+          args: suite execute ${{ secrets.GI_SUITE }} \
+            --apiKey ${{ secrets.GI_API_KEY }} \
+            --startUrl ${{ steps.netlify.outputs.url }} \
+            --ngrokTunnel node-app:8000 \
+            --ngrokUrlVariable startUrl \
+            --ngrokToken ${{ secrets.NGROK_TOKEN }} \
+            --errorOnFail
