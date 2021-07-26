@@ -14,7 +14,7 @@ jobs:
       - name: install, build, and run app
         run: |
           cd test/node-app
-          node index.js &
+          which node
       - name: execute Ghost Inspector suite
         uses: docker://ghostinspector/cli
         with:
