@@ -14,14 +14,14 @@ jobs:
       - name: install, build, and run app
         run: |
           cd test/node-app
-          which node
-      - name: execute Ghost Inspector suite
-        uses: docker://ghostinspector/cli
-        with:
-          args: suite execute ${{ secrets.GI_SUITE }} \
-            --apiKey ${{ secrets.GI_API_KEY }} \
-            --startUrl ${{ steps.netlify.outputs.url }} \
-            --ngrokTunnel node-app:8000 \
-            --ngrokUrlVariable startUrl \
-            --ngrokToken ${{ secrets.NGROK_TOKEN }} \
-            --errorOnFail
+          node index.js
+      # - name: execute Ghost Inspector suite
+      #   uses: docker://ghostinspector/cli
+      #   with:
+      #     args: suite execute ${{ secrets.GI_SUITE }} \
+      #       --apiKey ${{ secrets.GI_API_KEY }} \
+      #       --startUrl ${{ steps.netlify.outputs.url }} \
+      #       --ngrokTunnel node-app:8000 \
+      #       --ngrokUrlVariable startUrl \
+      #       --ngrokToken ${{ secrets.NGROK_TOKEN }} \
+      #       --errorOnFail
