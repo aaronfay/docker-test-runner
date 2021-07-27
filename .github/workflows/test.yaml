@@ -21,7 +21,7 @@ jobs:
           GI_API_KEY: ${{ secrets.GI_API_KEY }}
           GI_SUITE: ${{ secrets.GI_SUITE }}
           NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
-          APP_PORT: node-app:3000
+          APP_PORT: node-app:8000
         uses: docker://ghostinspector/test-runner-standalone
 
       # - name: execute Ghost Inspector suite
