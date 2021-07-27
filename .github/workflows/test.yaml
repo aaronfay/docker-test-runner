@@ -16,21 +16,20 @@ jobs:
           cd test/node-app
           node index.js &
           sleep 3
-      - name: execute Ghost Inspector suite
-        env:
-          GI_API_KEY: ${{ secrets.GI_API_KEY }}
-          GI_SUITE: ${{ secrets.GI_SUITE }}
-          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
-          APP_PORT: node-app:8000
-        uses: docker://ghostinspector/test-runner-standalone
-
       # - name: execute Ghost Inspector suite
-      #   uses: docker://ghostinspector/cli
-      #   with:
-      #     args: suite execute ${{ secrets.GI_SUITE }} \
-      #       --apiKey ${{ secrets.GI_API_KEY }} \
-      #       --startUrl ${{ steps.netlify.outputs.url }} \
-      #       --ngrokTunnel node-app:8000 \
-      #       --ngrokUrlVariable startUrl \
-      #       --ngrokToken ${{ secrets.NGROK_TOKEN }} \
-      #       --errorOnFail
+      #   env:
+      #     GI_API_KEY: ${{ secrets.GI_API_KEY }}
+      #     GI_SUITE: ${{ secrets.GI_SUITE }}
+      #     NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+      #     APP_PORT: node-app:8000
+      #   uses: docker://ghostinspector/test-runner-standalone
+
+      - name: execute Ghost Inspector suite
+        uses: docker://ghostinspector/cli
+        with:
+          args: suite execute ${{ secrets.GI_SUITE }} \
+            --apiKey ${{ secrets.GI_API_KEY }} \
+            --ngrokTunnel node-app:8000 \
+            --ngrokUrlVariable startUrl \
+            --ngrokToken ${{ secrets.NGROK_TOKEN }} \
+            --errorOnFail
